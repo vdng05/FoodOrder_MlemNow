@@ -21,6 +21,10 @@ return new class extends Migration
             $table->integer('base_price');
             $table->integer('sale_price')->nullable(); // Giá sau khuyến mãi
             $table->boolean('is_available')->default(true); // Xử lý ngoại lệ "Món ăn tạm hết hàng"
+            $table->integer('prep_time')->default(15); // Thời gian chuẩn bị (phút)
+            $table->integer('sold_count')->default(0); // Lượt đã bán
+            $table->text('nutrition_info')->nullable();
+            $table->text('ingredients')->nullable();
             $table->timestamps();
         });
     }
