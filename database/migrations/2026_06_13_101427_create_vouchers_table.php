@@ -12,13 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('vouchers', function (Blueprint $table) {
-            $table->id();
-            $table->string('code')->unique();
-            $table->integer('discount_amount');
-            $table->integer('min_order_value')->default(0); // Điều kiện áp dụng
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
-        });
+        $table->id();
+        $table->string('code')->unique(); // Mã voucher (VD: AJC18S36)
+        
+        // CÁC CỘT MỚI PHỤC VỤ FACTORY PATTERN
+        $table->string('type')->default('amount'); // Loại giảm giá: 'percent' hoặc 'amount'
+        $table->integer('discount_value'); // Giá trị giảm (% hoặc VNĐ)
+        $table->integer('max_discount')->nullable(); // Mức giảm tối đa cho loại percent
+        $table->integer('quantity')->default(100); // Số lượng lượt sử dụng
+        
+        $table->integer('min_order_value')->default(0); 
+        $table->timestamp('expires_at')->nullable(); 
+        $table->timestamps();
+    });
     }
 
     /**

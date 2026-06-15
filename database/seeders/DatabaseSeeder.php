@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
             SizeAndToppingSeeder::class,
             VoucherSeeder::class,
             OrderSeeder::class,
+            UserAddressSeeder::class,
+            CartSeeder::class,
         ]);
     }
 }

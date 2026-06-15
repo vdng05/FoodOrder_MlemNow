@@ -6,6 +6,10 @@
     <title>MlemNow</title>
     <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/png"> 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <style>
+        body { display: flex; flex-direction: column; min-height: 100vh; margin: 0; }
+        main { flex: 1; }
+    </style>
 </head>
 <body>
 
@@ -17,15 +21,24 @@
                     <span style="color: white; font-size: 50px; font-weight: bold; line-height: 65px;">MlemNow</span>
                 </a>
             </div>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Tìm món ăn hoặc quán ăn...">
-                <button onclick="searchFood()"> Tìm kiếm </button>
-            </div>
+            <form action="{{ route('search') }}" method="GET" class="search-box">
+                <input type="text" name="keyword" id="searchInput" placeholder="Tìm món ăn hoặc quán ăn..." value="{{ request('keyword') }}" required>
+                <button type="submit"> Tìm kiếm </button>
+            </form>
             <nav>
                 <a href="{{ route('home') }}"> Trang chủ </a>
-                <a href="#nearbySection"> Gần bạn </a>
-                <a href="#cartSection"> Giỏ hàng </a>
-                <a href="#loginSection" class="login-btn"> Đăng nhập </a>
+                <a href="{{ route('orders.history') }}"> Đơn hàng </a>
+                <a href="{{ route('cart.index') }}"> Giỏ hàng </a>
+                
+                @auth
+                    <span style="color: white; font-weight: bold; margin-left: 10px;">👤 {{ Auth::user()->name }}</span>
+                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="login-btn" style="border: none; cursor: pointer; margin-left: 10px;">Đăng xuất</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="login-btn"> Đăng nhập </a>
+                @endauth
             </nav>
         </div>
     </header>
@@ -83,8 +96,45 @@
         </div>
     </div>
 
-    <footer>
-        MlemNow Modern UI - HCI Project
+    <footer class="main-footer">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <img src="{{ asset('images/logo.png') }}" alt="MlemNow Logo">
+                <span>Mlem Now</span>
+            </div>
+            <div class="footer-slogan">Đặt món ăn trực tuyến nhanh chóng, tiện lợi và dễ dàng</div>
+        </div>
+
+        <div class="footer-columns">
+            <div class="footer-col">
+                <h4>Về chúng tôi</h4>
+                <ul>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Điều khoản</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Khám phá</h4>
+                <ul>
+                    <li><a href="#">Món ăn nổi bật</a></li>
+                    <li><a href="#">Món ăn gần bạn</a></li>
+                    <li><a href="#">Quán ăn gần bạn</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Liên hệ</h4>
+                <ul>
+                    <li><i class="fas fa-phone"></i> 0123 444 555</li>
+                    <li><i class="fas fa-envelope"></i> support@mlemnow.vn</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Hà Nội, Việt Nam</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            &copy; 2026 MlemNow. All rights reserved.
+        </div>
     </footer>
 
     <script>
@@ -121,6 +171,13 @@
     </script>
     
     @stack('scripts')
-
+    @if(session('success'))
+    <div id="toast" style="position: fixed; bottom: 20px; right: 20px; background: #ff5722; color: white; padding: 15px; border-radius: 8px; z-index: 1000;">
+        {{ session('success') }}
+    </div>
+    <script>
+        setTimeout(() => { document.getElementById('toast').style.display = 'none'; }, 3000);
+    </script>
+    @endif
 </body>
 </html>
