@@ -178,6 +178,10 @@ nav a:hover::after{
     width:100%;
 }
 
+nav a.active::after { 
+    width:100%;
+}
+
 /* ========================= */
 /* LOGIN BUTTON */
 /* ========================= */
@@ -438,7 +442,12 @@ nav a:hover::after{
 
     font-size:20px;
     font-weight:bold;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
+.slider-btn.hide {
+            opacity: 0 !important;
+            pointer-events: none !important; 
+        }
 
 .slider-btn.left{
     left:-20px;
@@ -2016,10 +2025,11 @@ hr {
 .form-section h3 { font-size: 16px; margin-bottom: 15px; color: #333; }
 
 /* Custom Radio Boxes (Chọn Size) */
-.option-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-.custom-radio-box { cursor: pointer; }
+.option-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; align-items: stretch;}
+.custom-radio-box { cursor: pointer;display: block;
+        height: 100%; }
 .custom-radio-box input { display: none; }
-.box-content { display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #eee; border-radius: 8px; transition: 0.3s; }
+.box-content { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px; border: 2px solid #eee; border-radius: 8px; transition: 0.3s; }
 .custom-radio-box input:checked + .box-content { border-color: #ff5722; background: #fff9f7; }
 .box-content .opt-name { font-weight: bold; color: #333; margin-bottom: 5px; }
 .box-content .opt-price { color: #ff5722; font-size: 14px; }

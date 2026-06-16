@@ -291,12 +291,12 @@
 
         <div style="padding: 0 20px 20px 20px; display: flex; justify-content: flex-end; gap: 15px;">
             <button type="button" id="btnConfirmDelete" class="btn-modal-delete"
-                style="background:#ff5722; color:white; border:none; padding:10px 25px; border-radius:6px; font-weight:bold; cursor:pointer; font-size: 15px; transition: 0.3s;">
+                style="width: 110px; background:#ff5722; color:white; border:none; padding:10px 0; border-radius:6px; font-weight:bold; cursor:pointer; font-size: 15px; transition: 0.3s; text-align: center;">
                 Đồng ý
             </button>
             
             <button type="button" onclick="closeConfirmModal()" class="btn-modal-cancel"
-                style="background:#fff; color:#ff5722; border:1px solid #ff5722; padding:10px 25px; border-radius:6px; font-weight:bold; cursor:pointer; font-size: 15px; transition: 0.3s;">
+                style="width: 110px; background:#fff; color:#ff5722; border:1px solid #ff5722; padding:10px 0; border-radius:6px; font-weight:bold; cursor:pointer; font-size: 15px; transition: 0.3s; text-align: center;">
                 Hủy
             </button>
         </div>

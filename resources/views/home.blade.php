@@ -138,3 +138,62 @@
         </div>
     </div>
 @endsection
+<script>
+    // ==========================================
+        // LOGIC ẨN/HIỆN NÚT SLIDER THÔNG MINH
+        // ==========================================
+        
+        function updateSliderButtons(slider) {
+            // Tìm 2 nút trái/phải nằm cùng khối với slider hiện tại
+            const leftBtn = slider.parentElement.querySelector('.slider-btn.left');
+            const rightBtn = slider.parentElement.querySelector('.slider-btn.right');
+            
+            if (!leftBtn || !rightBtn) return;
+
+            // Ẩn nút trái nếu đang ở vị trí đầu tiên
+            if (slider.scrollLeft <= 0) {
+                leftBtn.classList.add('hide');
+            } else {
+                leftBtn.classList.remove('hide');
+            }
+
+            // Ẩn nút phải nếu đã cuộn đến vị trí cuối cùng
+            // (Cộng thêm 2 pixel để bù trừ sai số làm tròn của một số trình duyệt)
+            if (Math.ceil(slider.scrollLeft + slider.clientWidth) >= slider.scrollWidth - 2) {
+                rightBtn.classList.add('hide');
+            } else {
+                rightBtn.classList.remove('hide');
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Lấy tất cả các dải trượt trên trang
+            const sliders = document.querySelectorAll('.slider');
+            
+            sliders.forEach(slider => {
+                // 1. Kiểm tra trạng thái ngay khi vừa load trang (ẩn nút trái)
+                updateSliderButtons(slider);
+                
+                // 2. Lắng nghe mỗi khi người dùng vuốt/cuộn
+                slider.addEventListener('scroll', function() {
+                    updateSliderButtons(slider);
+                });
+            });
+
+            // 3. Tính toán lại khi người dùng xoay ngang điện thoại hoặc co giãn màn hình
+            window.addEventListener('resize', function() {
+                sliders.forEach(slider => updateSliderButtons(slider));
+            });
+        });
+
+        // (Code cuộn slider hiện tại của bạn, tôi viết lại để tối ưu hơn)
+        function scrollSlider(id, amount) {
+            const slider = document.getElementById(id);
+            if (slider) {
+                slider.scrollBy({
+                    left: amount,
+                    behavior: "smooth"
+                });
+            }
+        }
+</script>
