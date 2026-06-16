@@ -125,9 +125,9 @@
             <div class="footer-col">
                 <h4>Liên hệ</h4>
                 <ul>
-                    <li><i class="fas fa-phone"></i> 0123 444 555</li>
-                    <li><i class="fas fa-envelope"></i> support@mlemnow.vn</li>
-                    <li><i class="fas fa-map-marker-alt"></i> Hà Nội, Việt Nam</li>
+                    <li><i class="fas fa-phone"></i>📞 0123 444 555</li>
+                    <li><i class="fas fa-envelope"></i>📩 support@mlemnow.vn</li>
+                    <li><i class="fas fa-map-marker-alt"></i>📍 Hà Nội, Việt Nam</li>
                 </ul>
             </div>
         </div>
@@ -171,13 +171,13 @@
     </script>
     
     @stack('scripts')
-    @if(session('success'))
+    <!-- @if(session('success'))
     <div id="toast" style="position: fixed; bottom: 20px; right: 20px; background: #ff5722; color: white; padding: 15px; border-radius: 8px; z-index: 1000;">
         {{ session('success') }}
     </div>
     <script>
         setTimeout(() => { document.getElementById('toast').style.display = 'none'; }, 3000);
     </script>
-    @endif
+    @endif -->
 </body>
 </html>

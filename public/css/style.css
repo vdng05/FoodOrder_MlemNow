@@ -1957,22 +1957,28 @@ hr {
     font-weight: 500;
 }
 
+/* --- Tối ưu hiển thị hàng Giá và Lượt bán --- */
 .food-price-row {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: baseline; /* QUAN TRỌNG NHẤT: Căn thẳng tắp theo đường chân chữ */
     margin-top: auto; 
+    width: 100%;
+    flex-wrap: nowrap;
 }
 
 .food-price-row .price {
     font-size: 22px;
     font-weight: bold;
     color: #ff5722;
+    white-space: nowrap;
+    line-height: 1; /* Loại bỏ khoảng hở tàng hình phía dưới chữ to */
 }
 
 .food-price-row .sold-count {
     font-size: 13px;
     color: #888;
+    white-space: nowrap;
 }
 
 /* ================= CHI TIẾT MÓN ĂN V2 ================= */

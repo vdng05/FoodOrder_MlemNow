@@ -65,7 +65,7 @@ class OrderController extends Controller
         // Lưu đè lại mảng dữ liệu hoàn chỉnh vào Session giỏ hàng
         session()->put('cart', $cart);
         
-        return redirect()->route('cart.index')->with('success', 'Đã sao chép các món và tùy chọn cũ vào giỏ!');
+        return redirect()->route('cart.index');
     }
 
     // Xử lý khi người dùng xác nhận đã nhận hàng
