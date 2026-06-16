@@ -103,15 +103,33 @@
             <button class="slider-btn left" onclick="scrollSlider('restaurantSlider',-300)">‹</button>
             <div class="slider" id="restaurantSlider">
                 @foreach($restaurants as $restaurant)
-                    <div class="food-card clickable-card" onclick="window.location.href='{{ route('search', ['restaurant_id' => $restaurant->id]) }}'">
-                        <img src="{{ $restaurant->image ?? asset('images/default-restaurant.jpg') }}" alt="{{ $restaurant->name }}">
+                    <div class="food-card clickable-card" onclick="window.location.href='{{ route('search', ['restaurant_id' => $restaurant->id]) }}'" style="display: flex; flex-direction: column;">
                         
-                        <div class="food-content" style="justify-content: center; padding-bottom: 20px;">
-                            <h3 style="margin-bottom: 10px;">{{ $restaurant->name }}</h3>
-                            <p style="color: #666; font-size: 14px;">
-                                <i class="fas fa-star" style="color: #ffc107;"></i> {{'⭐ ' . ($restaurant->rating ?? '4.5') }} 
-                                &nbsp;•&nbsp; Cách bạn {{ $restaurant->distance ?? '1.5' }}km
-                            </p>
+                        <!-- Ảnh quán ăn -->
+                        <img src="{{ $restaurant->image ?? asset('images/default-restaurant.jpg') }}" alt="{{ $restaurant->name }}" style="width: 100%; height: 150px; object-fit: cover;">
+                        
+                        <!-- Khối nội dung -->
+                        <div class="food-content" style="padding: 15px; display: flex; flex-direction: column; flex: 1; text-align: left;">
+                            
+                            <!-- Tên quán -->
+                            <h3 style="margin: 0 0 8px 0; font-size: 18px; color: #222; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                {{ $restaurant->name }}
+                            </h3>
+                            
+                            <!-- Đánh giá và Khoảng cách -->
+                            <div style="display: flex; align-items: baseline; color: #777; font-size: 14px; margin-bottom: 12px;">
+                                <i class="fas fa-star" style="color: #ffc107; margin-right: 5px;"></i>
+                                <span style="color: #555; font-weight: 500;">{{ '⭐ '. $restaurant->rating ?? '4.8' }}</span>
+                                <span style="margin: 0 8px; font-size: 12px;">•</span>
+                                <span>{{ $restaurant->distance ?? '1.2' }}km</span>
+                            </div>
+
+                            <!-- Mô tả món ăn nổi bật (Tags) -->
+                            <div style="font-size: 13.5px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: auto;">
+                                <!-- Chú ý: Bạn cần thay trường 'specialties' bằng trường thực tế trong Database của bạn -->
+                                {{ $restaurant->specialties ?? 'Cơm tấm • Cơm gà • Canh' }}
+                            </div>
+                            
                         </div>
                     </div>
                 @endforeach

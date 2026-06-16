@@ -77,7 +77,7 @@ class CheckoutController extends Controller
                 // Đảm bảo voucher còn hạn và còn số lượng lượt dùng
                 if (!$isExpired && $voucher->quantity > 0) {
                     try {
-                        // Gọi "Nhà máy" ra để tính lại số tiền giảm chuẩn xác 100%
+                        // Gọi Factory ra để tính lại số tiền giảm chuẩn xác 100%
                         $processor = \App\Factories\Voucher\VoucherFactory::make($voucher->type);
                         $discount_applied = $processor->calculateDiscount($subtotal, $voucher);
                         
@@ -90,7 +90,7 @@ class CheckoutController extends Controller
             }
         }
 
-        // Ép kiểu float để đảm bảo biến này KHÔNG BAO GIỜ bị null (khắc phục dứt điểm lỗi SQL)
+        // Ép kiểu float để đảm bảo biến này không bị null
         $discount_applied = (float) $discount_applied;
 
         // 4. Tính toán tổng tiền cuối cùng (Dùng max để tránh tổng tiền bị âm)
@@ -107,7 +107,7 @@ class CheckoutController extends Controller
         // Xóa giỏ hàng và dữ liệu mã giảm giá lưu tạm
         session()->forget(['cart', 'applied_voucher']);
 
-        // Trả về view thành công (khuyên dùng redirect để tránh bị gửi lại Form khi F5)
+        // Trả về view thành công
         return view('checkout.success', compact('order'));
     }
 

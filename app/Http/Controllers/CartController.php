@@ -90,7 +90,7 @@ class CartController extends Controller
             unset($cart[$request->cart_id]);
             session()->put('cart', $cart);
         }
-        return redirect()->route('cart.index')->with('success', 'Đã xóa món khỏi giỏ.');
+        return redirect()->route('cart.index');
     }
 
     public function update(Request $request)

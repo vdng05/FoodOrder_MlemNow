@@ -9,7 +9,7 @@
     <div class="history-filters">
         <a href="{{ route('orders.history', ['status' => 'all']) }}" class="filter-btn {{ $statusFilter == 'all' ? 'active' : '' }}">Tất cả</a>
         <a href="{{ route('orders.history', ['status' => 'pending']) }}" class="filter-btn {{ $statusFilter == 'pending' ? 'active' : '' }}">Chờ xác nhận</a>
-        <a href="{{ route('orders.history', ['status' => 'delivering']) }}" class="filter-btn {{ $statusFilter == 'delivering' ? 'active' : '' }}">Đang giao</a>
+        <!-- <a href="{{ route('orders.history', ['status' => 'delivering']) }}" class="filter-btn {{ $statusFilter == 'delivering' ? 'active' : '' }}">Đang giao</a> -->
         <a href="{{ route('orders.history', ['status' => 'completed']) }}" class="filter-btn {{ $statusFilter == 'completed' ? 'active' : '' }}">Đã giao</a>
     </div>
 

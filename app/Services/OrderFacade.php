@@ -11,7 +11,7 @@ class OrderFacade
 {
     public function placeOrder(array $customerData, array $cart)
     {
-        // Sử dụng Database Transaction để đảm bảo tính toàn vẹn dữ liệu (Lỗi một bước là hủy toàn bộ)
+        // Sử dụng Database Transaction để đảm bảo tính toàn vẹn dữ liệu
         return DB::transaction(function () use ($customerData, $cart) {
             
             // 1. Tính toán số tiền từ giỏ hàng thật

@@ -11,7 +11,95 @@
     input[type=number] {
         -moz-appearance: textfield;
     }
+    /* --- CSS CHO THÔNG BÁO TOAST GÓC PHẢI TRÊN --- */
+    .toast-notification {
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        background-color: #d8fddc;
+        border-left: 6px solid #d8fddc; /* Viền trái màu xanh lá */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        padding: 16px 20px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        z-index: 99999;
+        /* Animation trượt từ phải vào */
+        transform: translateX(150%);
+        animation: slideInRight 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+
+    .toast-notification .toast-icon {
+        font-size: 26px;
+        color: #4caf50; /* Icon màu xanh lá */
+    }
+
+    .toast-notification .toast-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .toast-notification .toast-title {
+        font-weight: 800;
+        color: #333;
+        font-size: 16px;
+        margin-bottom: 3px;
+    }
+
+    .toast-notification .toast-msg {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .toast-notification .toast-close {
+        margin-left: 10px;
+        color: #bbb;
+        cursor: pointer;
+        font-size: 18px;
+        transition: color 0.3s;
+    }
+
+    .toast-notification .toast-close:hover {
+        color: #333;
+    }
+
+    @keyframes slideInRight {
+        from { transform: translateX(150%); }
+        to { transform: translateX(0); }
+    }
+
+    @keyframes slideOutRight {
+        from { transform: translateX(0); }
+        to { transform: translateX(150%); opacity: 0;}
+    }
 </style>
+@if(session('success'))
+    <div class="toast-notification" id="customToast">
+        <i class="fas fa-check-circle toast-icon"></i>
+        <div class="toast-body">
+            <span class="toast-title">Thành công</span>
+            <span class="toast-msg">{{ session('success') }}</span>
+        </div>
+        <i class="fas fa-times toast-close" onclick="closeToast()"></i>
+    </div>
+
+    <script>
+        // JS để tự động ẩn thông báo sau 3.5 giây
+        setTimeout(function() {
+            closeToast();
+        }, 3500);
+
+        function closeToast() {
+            let toast = document.getElementById('customToast');
+            if(toast) {
+                // Thêm animation trượt ra ngoài trước khi xóa
+                toast.style.animation = 'slideOutRight 0.5s forwards';
+                setTimeout(() => toast.remove(), 500);
+            }
+        }
+    </script>
+@endif
 <div class="container detail-page-wrapper">
     <div class="back-btn-wrapper">
         <a href="{{ route('search', ['restaurant_id' => $food->restaurant_id]) }}" class="back-btn">
@@ -139,7 +227,7 @@
                 <div class="summary-box">
                     <div class="summary-text">
                         <strong>Tạm tính</strong><br>
-                        <small>(Đã bao gồm VAT nếu có)</small>
+                        <!-- <small>(Đã bao gồm VAT nếu có)</small> -->
                     </div>
                     <div class="summary-total" id="totalPriceDisplay">
                         {{ number_format($food->sale_price ?? $food->base_price, 0, ',', '.') }}đ
@@ -147,7 +235,7 @@
                 </div>
 
                 <div class="action-buttons-row">
-                    <button type="submit" name="action" value="add_cart" class="btn-add-cart">🛒 Thêm vào giỏ hàng</button>
+                    <button type="submit" name="action" value="add_cart" class="btn-add-cart" style="background: #FFE2D3; color: #FD5532; border: none; padding: 12px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s;">🛒 Thêm vào giỏ hàng</button>
                     <button type="submit" name="action" value="buy_now" class="btn-buy-now">Mua ngay</button>
                 </div>
             </form>
