@@ -14,7 +14,7 @@
     /* --- CSS CHO THÔNG BÁO TOAST GÓC PHẢI TRÊN --- */
     .toast-notification {
         position: fixed;
-        top: 30px;
+        top: 90px; 
         right: 30px;
         background-color: #d8fddc;
         border-left: 6px solid #d8fddc; /* Viền trái màu xanh lá */
@@ -102,19 +102,31 @@
 @endif
 <div class="container detail-page-wrapper">
     <div class="back-btn-wrapper">
-        <a href="{{ route('search', ['restaurant_id' => $food->restaurant_id]) }}" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Quay lại thực đơn quán
+        <a href="{{ url()->previous() }}" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Quay lại
         </a>
     </div>
 
     <div class="detail-layout">
         <div class="detail-left">
             <div class="image-gallery">
-                <img src="{{ $food->image ?? asset('images/default-food.jpg') }}" alt="{{ $food->name }}" class="main-img">
-                <div class="thumbnail-list">
-                    <img src="{{ $food->image ?? asset('images/default-food.jpg') }}" class="active">
-                    <img src="{{ $food->image ?? asset('images/default-food.jpg') }}">
-                    <img src="{{ $food->image ?? asset('images/default-food.jpg') }}">
+                <div class="main-image-container" style="position: relative; margin-bottom: 15px;">
+                    <button type="button" onclick="prevFoodImage()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-size: 18px; z-index: 10; color: #ff5722; transition: 0.2s;">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <img src="{{ $food->image ?? asset('images/default-food.jpg') }}" alt="{{ $food->name }}" class="main-img" id="mainFoodImage" style="width: 100%; height: 350px; object-fit: cover; border-radius: 12px; display: block; transition: 0.3s;">
+                    
+                    <button type="button" onclick="nextFoodImage()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-size: 18px; z-index: 10; color: #ff5722; transition: 0.2s;">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="thumbnail-list" style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;">
+                    <img src="{{ $food->image ?? asset('images/default-food.jpg') }}" class="thumb-img" onclick="changeFoodImage(0)" style="width: 80px; height: 60px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid #ff5722; opacity: 1; transition: 0.3s;">
+                    
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500" class="thumb-img" onclick="changeFoodImage(1)" style="width: 80px; height: 60px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.3s;">
+                    <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500" class="thumb-img" onclick="changeFoodImage(2)" style="width: 80px; height: 60px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.3s;">
                 </div>
             </div>
 
@@ -311,5 +323,52 @@
     }
 
     window.onload = function() { calculateTotal(); };
+    // ==========================================
+    // LOGIC CHO IMAGE GALLERY
+    // ==========================================
+    
+    // Mảng chứa danh sách các đường link ảnh
+    const foodImages = [
+        "{{ $food->image ?? asset('images/default-food.jpg') }}",
+        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500",
+        "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500"
+    ];
+    let currentImageIndex = 0;
+
+    // Hàm đổi ảnh khi bấm vào ảnh thu nhỏ
+    function changeFoodImage(index) {
+        currentImageIndex = index;
+        updateGalleryUI();
+    }
+
+    // Hàm lùi ảnh (Nút trái)
+    function prevFoodImage() {
+        currentImageIndex = (currentImageIndex === 0) ? foodImages.length - 1 : currentImageIndex - 1;
+        updateGalleryUI();
+    }
+
+    // Hàm tiến ảnh (Nút phải)
+    function nextFoodImage() {
+        currentImageIndex = (currentImageIndex === foodImages.length - 1) ? 0 : currentImageIndex + 1;
+        updateGalleryUI();
+    }
+
+    // Cập nhật lại giao diện (Thay đổi ảnh chính và làm nổi bật viền ảnh thu nhỏ)
+    function updateGalleryUI() {
+        // Đổi src của ảnh chính
+        document.getElementById('mainFoodImage').src = foodImages[currentImageIndex];
+        
+        // Cập nhật viền cho ảnh thu nhỏ
+        let thumbs = document.querySelectorAll('.thumb-img');
+        thumbs.forEach((thumb, i) => {
+            if(i === currentImageIndex) {
+                thumb.style.borderColor = '#ff5722';
+                thumb.style.opacity = '1';
+            } else {
+                thumb.style.borderColor = 'transparent';
+                thumb.style.opacity = '0.6';
+            }
+        });
+    }
 </script>
 @endpush

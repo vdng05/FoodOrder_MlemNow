@@ -26,9 +26,9 @@
                 <button type="submit"> Tìm kiếm </button>
             </form>
             <nav>
-                <a href="{{ route('home') }}"> Trang chủ </a>
-                <a href="{{ route('orders.history') }}"> Đơn hàng </a>
-                <a href="{{ route('cart.index') }}"> Giỏ hàng </a>
+                <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}"> Trang chủ </a>
+                <a href="{{ route('orders.history') }}" class="{{ request()->routeIs('orders.*') ? 'active' : '' }}"> Đơn hàng </a>
+                <a href="{{ route('cart.index') }}" class="{{ request()->routeIs('cart.*', 'checkout.*') ? 'active' : '' }}"> Giỏ hàng </a>
                 
                 @auth
                     <span style="color: white; font-weight: bold; margin-left: 10px;">👤 {{ Auth::user()->name }}</span>
@@ -125,9 +125,9 @@
             <div class="footer-col">
                 <h4>Liên hệ</h4>
                 <ul>
-                    <li><i class="fas fa-phone"></i>📞 0123 444 555</li>
-                    <li><i class="fas fa-envelope"></i>📩 support@mlemnow.vn</li>
-                    <li><i class="fas fa-map-marker-alt"></i>📍 Hà Nội, Việt Nam</li>
+                    <li></i>📞 0123 444 555</li>
+                    <li></i>📩 support@mlemnow.vn</li>
+                    <li></i>📍 Hà Nội, Việt Nam</li>
                 </ul>
             </div>
         </div>
